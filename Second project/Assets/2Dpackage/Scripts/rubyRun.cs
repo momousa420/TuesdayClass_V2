@@ -47,5 +47,10 @@ public class rubyRun : MonoBehaviour
         //transform.position = rubyPostion;  //舊方法不使用，因為會產生抖動行為
 
         rb.MovePosition(rubyPosition);  //使用剛體的 MovePosition()方法來移動角色
+
+        if (horizontal == 0 && vertical == 0)
+        {
+            rubyAnimator.SetTrigger("待著");
+        }
     }
 }
