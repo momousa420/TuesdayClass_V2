@@ -31,6 +31,7 @@ public class rubyRun : MonoBehaviour
     // 使用 FixedUpdate 取代 Update() 可得到更好的物理效果
     void FixedUpdate()
     {
+
         Vector2 rubyPosition = transform.position; //宣告一個 rubyPosition (向量 型態)變數，
                                                    //乘載此物件的座標位置
         float horizontal = Input.GetAxis("Horizontal");
@@ -50,7 +51,8 @@ public class rubyRun : MonoBehaviour
 
         if (horizontal == 0 && vertical == 0)
         {
-            rubyAnimator.SetTrigger("待著");
+            rubyAnimator.SetTrigger("Stay");
         }
+
     }
 }
