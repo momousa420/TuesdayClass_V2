@@ -16,10 +16,23 @@ public class GoGoGo : MonoBehaviour
 
     public float speed = 3;
 
+    //【血量控制 1/4】
+    [Header("最高血量"), Range(0, 10)]             //在檢查器內的輔助顯示
+    public int maxHealth = 5;       //定義最高血量值
+
+    [Header("當前血量"), Range(0, 10)]   //在檢查器內的輔助顯示+可調動
+    //private int currentHealth;       //定義當前血量 (不顯示)
+    public int currentHealth;          //定義當前血量 (顯示在檢查器)
+
     private void Start()
     {
         rubyAnimator = GetComponent<Animator>();  //遊戲啟動取得 動畫控制器元件
         rb = GetComponent<Rigidbody2D>();         //遊戲啟動取得 剛體元件
+        
+        //【血量控制 2/4】
+        currentHealth = maxHealth;
+        print("Ruby當前血量：" + currentHealth);
+
     }
 
     private void FixedUpdate()
@@ -28,8 +41,8 @@ public class GoGoGo : MonoBehaviour
 
         float horizontal = Input.GetAxis("Horizontal");  //擷取左右按鍵的數值
         float vertical = Input.GetAxis("Vertical");      //擷取上下按鍵的數值
-        print("Horizontal is: " + horizontal);            //檢查用 (顯示按鍵數值)
-        print("Vertical is: " + vertical);                //檢查用 (顯示按鍵數值)
+        //print("Horizontal is:" + horizontal);            //檢查用 (顯示按鍵數值)
+        //print("Vertical is: " + vertical);                //檢查用 (顯示按鍵數值)
 
         rubyMove = new Vector2(horizontal, vertical);    //把按鍵的數值賦予給 rubyMove
 
@@ -48,5 +61,17 @@ public class GoGoGo : MonoBehaviour
         //移動 ruby 位置
         rubyPosition = rubyPosition + speed * rubyMove * Time.deltaTime;
         rb.MovePosition(rubyPosition);   //使用剛體進行移動
+
     }
+
+    //【血量控制 3/4】
+    public void ChangeHealth(int amount)
+    {
+        //currentHealth = currentHealth + amount;      //加血機制-1
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);      //加血機制-2  改良版
+        print("Ruby當前血量：" + currentHealth);     //檢查是否有加血
+
+    }
+
+
 }
