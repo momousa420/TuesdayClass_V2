@@ -9,6 +9,6 @@ public class Damagable : MonoBehaviour
         GoGoGo rubyGO = collision.GetComponent<GoGoGo>();
         print("碰到的東西是：" + rubyGO);
         rubyGO.ChangeHealth(-1);
-        Destroy(gameObject);
+
     }
 }
