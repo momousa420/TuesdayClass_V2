@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Tilemap
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
+  - mobLayer
+  - CharacterLayer
+  - BulletLayer
   - Confiner
   - 
   - 

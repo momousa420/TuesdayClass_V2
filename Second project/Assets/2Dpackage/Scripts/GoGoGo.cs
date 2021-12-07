@@ -23,6 +23,9 @@ public class GoGoGo : MonoBehaviour
     [Header("當前血量"), Range(0, 10)]   //在檢查器內的輔助顯示+可調動
     //private int currentHealth;       //定義當前血量 (不顯示)
     public int currentHealth;          //定義當前血量 (顯示在檢查器)
+    
+    //【發射子彈 1/3】
+    public GameObject projectilePrefab;
 
     private void Start()
     {
@@ -62,6 +65,17 @@ public class GoGoGo : MonoBehaviour
         rubyPosition = rubyPosition + speed * rubyMove * Time.deltaTime;
         rb.MovePosition(rubyPosition);   //使用剛體進行移動
 
+        //【血量控制 4/4】當血量為 0 時，重新遊戲關卡 (讀取關卡)
+        if (currentHealth == 0)
+        {
+            Application.LoadLevel("class_enemyGo");
+        }
+
+        //【發射子彈 3/3】設定發射行為的按鍵
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Launch();
+        }
     }
 
     //【血量控制 3/4】
@@ -73,5 +87,27 @@ public class GoGoGo : MonoBehaviour
 
     }
 
+    //【發射子彈 2/3】
+    private void Launch()  //使用private，因只有此程式專用
+    {
+        //使每次Ruby發射出的子彈 (Prefab形式) 都「實例化」成場景中的遊戲物件
+        //這個「實例化」動作就好比是我們手動把 #Project 中的物件拖曳到 #Scene 中
+        //但遊戲執行過程中，我們無法這麼做，所以必須透過程式來幫玩家執行這個動作
+        //生成的過程中，必須告知生成的 Prefab、要生成的位置 position、rotation角度
+        //Quaternion 表示無旋轉
+        GameObject projectileOnject = Instantiate(projectilePrefab,
+            rb.position, Quaternion.identity);
+
+        //在 Bullet.cs 中，我們設置了一個 Launch()方法，並透過「受力的方法」來移動
+        //所以這邊需要為此設立一個 Bullet 型態的變量，作為乘載此力的施壓容器
+        Bullet bullet = projectileOnject.GetComponent<Bullet>();
+
+        //在上面接收完畢後，便可透過自帶的 Launch() 方法來實現「受力的方法」
+        //我們在 Bullet.cs 中定義的 Launch() 方法需要給兩個參數：方向&力道
+        bullet.Launch(lookDirection, 300);  //300 數值越大，速度越快
+
+        //發射後，播放動畫
+        rubyAnimator.SetTrigger("Launch");
+    }
 
 }
