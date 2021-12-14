@@ -27,10 +27,12 @@ public class EnemyGo : MonoBehaviour
 
     //【關閉煙霧特效 1/2】：使用關閉特效機制
     public ParticleSystem smokeEffect;
-
+    
+    //【被子彈擊中音效 1/3】
     private AudioSource audioSource;
 
-    public AudioClip[] hitSounds;
+    //public AudioClip hitsound;          //只播放一種音效
+    public AudioClip[] hitSounds;         //多種音效隨機播放
 
     #endregion
 
@@ -46,6 +48,7 @@ public class EnemyGo : MonoBehaviour
         //【動畫混合樹 2/4】
         enemyAnimator = GetComponent<Animator>();
 
+        //【被子彈擊中音效 2/3】
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -128,14 +131,15 @@ public class EnemyGo : MonoBehaviour
         //【敵人碰到子彈行為】動畫控制
         enemyAnimator.SetTrigger("Fixed");
 
-        int RandomNum = Random.Range(0, 2);
-
-        print("RandomNum is：" + RandomNum);
-        audioSource.PlayOneShot(hitSounds[RandomNum]);
-
         //【關閉煙霧特效 2/2】
         smokeEffect.Stop();
         //Destroy(smokeEffect); //此方式也可以，但粒子會瞬間消失，沒有 fu
+
+        //【被子彈擊中音效 3/3】
+        int RandomNum = Random.Range(0, 2);
+        //audioSource.PlayOneShot(hitSound);  //只播一個音效的方法
+        print("RandomNum is：" + RandomNum);  //為了檢測亂數輸出的值
+        audioSource.PlayOneShot(hitSounds[RandomNum]);  //指定播放檢查器的兩個音效
     }
     #endregion
 }

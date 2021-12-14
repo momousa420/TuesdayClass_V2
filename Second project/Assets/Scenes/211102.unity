@@ -10558,9 +10558,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6366054745325728928, guid: b4393ab235e601e4f85e90fa7113d988, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366054745325728928, guid: b4393ab235e601e4f85e90fa7113d988, type: 3}
       propertyPath: smokeEffect
       value: 
       objectReference: {fileID: 717334136}
+    - target: {fileID: 6366054745325728928, guid: b4393ab235e601e4f85e90fa7113d988, type: 3}
+      propertyPath: hitSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366054745325728928, guid: b4393ab235e601e4f85e90fa7113d988, type: 3}
+      propertyPath: hitSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ae904c7305df7344d86b2092c0cb3a26, type: 3}
+    - target: {fileID: 6366054745325728928, guid: b4393ab235e601e4f85e90fa7113d988, type: 3}
+      propertyPath: hitSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 709a835b61b848644946696fdd5e5a4d, type: 3}
     - target: {fileID: 6366054745325728929, guid: b4393ab235e601e4f85e90fa7113d988, type: 3}
       propertyPath: m_Name
       value: MrClock
