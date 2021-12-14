@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class EnemyGo : MonoBehaviour
 {
+    #region 參數
     //【移動控制 1/3】
     public int speed = 5;
     private Rigidbody2D rb; //設定為 private，避免他人在看此專案時，不知此物件為何
@@ -27,7 +28,13 @@ public class EnemyGo : MonoBehaviour
     //【關閉煙霧特效 1/2】：使用關閉特效機制
     public ParticleSystem smokeEffect;
 
-    // Start is called before the first frame update
+    private AudioSource audioSource;
+
+    public AudioClip[] hitSounds;
+
+    #endregion
+
+    #region 事件
     void Start()
     {
         //【移動控制 2/3】使用剛體移動，遊戲啟動初始取得剛體並存於 rb 剛體變數中
@@ -38,6 +45,8 @@ public class EnemyGo : MonoBehaviour
 
         //【動畫混合樹 2/4】
         enemyAnimator = GetComponent<Animator>();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -78,7 +87,9 @@ public class EnemyGo : MonoBehaviour
         PlayMoveAnimation();
 
     }
+    #endregion
 
+    #region 方法
     //【動畫混合樹 3/4】
     //因為此新建方法，只有在這裡使用，所以使用 private 即可
     private void PlayMoveAnimation()
@@ -117,8 +128,14 @@ public class EnemyGo : MonoBehaviour
         //【敵人碰到子彈行為】動畫控制
         enemyAnimator.SetTrigger("Fixed");
 
+        int RandomNum = Random.Range(0, 2);
+
+        print("RandomNum is：" + RandomNum);
+        audioSource.PlayOneShot(hitSounds[RandomNum]);
+
         //【關閉煙霧特效 2/2】
         smokeEffect.Stop();
         //Destroy(smokeEffect); //此方式也可以，但粒子會瞬間消失，沒有 fu
     }
+    #endregion
 }

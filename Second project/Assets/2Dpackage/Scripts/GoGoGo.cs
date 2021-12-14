@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class GoGoGo : MonoBehaviour
 {
+    #region 參數
     private Vector2 lookDirection;  //定義看的方向
     private Vector2 rubyPosition;   //定義位置
     private Vector2 rubyMove;       //定義移動量
@@ -27,6 +28,18 @@ public class GoGoGo : MonoBehaviour
     //【發射子彈 1/3】
     public GameObject projectilePrefab;
 
+    //【新增音效 1】
+    public AudioSource audioSource;
+
+    //【受傷音效 1】
+    public AudioClip playerHit;
+
+    //【子彈音效 1】
+    public AudioClip launchBullet;
+
+    #endregion
+
+    #region 事件
     private void Start()
     {
         rubyAnimator = GetComponent<Animator>();  //遊戲啟動取得 動畫控制器元件
@@ -35,6 +48,9 @@ public class GoGoGo : MonoBehaviour
         //【血量控制 2/4】
         currentHealth = maxHealth;
         print("Ruby當前血量：" + currentHealth);
+
+        //【新增音效 2】
+        audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -78,6 +94,9 @@ public class GoGoGo : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region 方法
     //【血量控制 3/4】
     public void ChangeHealth(int amount)
     {
@@ -85,6 +104,11 @@ public class GoGoGo : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);      //加血機制-2  改良版
         print("Ruby當前血量：" + currentHealth);     //檢查是否有加血
 
+        if (amount < 0)
+        {
+            //【受傷音效 2】
+            PlaySound(playerHit);
+        }
     }
 
     //【發射子彈 2/3】
@@ -108,6 +132,14 @@ public class GoGoGo : MonoBehaviour
 
         //發射後，播放動畫
         rubyAnimator.SetTrigger("Launch");
+
+        PlaySound(launchBullet);
     }
+
+    public void PlaySound(AudioClip audioClip)
+    {
+        audioSource.PlayOneShot(audioClip);
+    }
+    #endregion
 
 }
